@@ -1,5 +1,5 @@
 module.exports = app => {
-    const controller = app.controllers.notas;
+    const controller = app.controllers.notasController;
 
     app.route('/api/v1/notas')
         .get(controller.listNotas)

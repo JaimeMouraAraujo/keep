@@ -15,6 +15,7 @@
     "config": "3.2.3",
     "consign": "0.1.6",
     "express": "4.17.1",
+    "http-status-codes": "^2.2.0",
     "mysql2": "^2.3.3"
   }
 }

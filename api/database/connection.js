@@ -1,9 +1,7 @@
 const mysql = require("mysql2/promise");
 
 module.exports = () => {
-    const db = {};
-
-    db.connect = async () => {
+    return async () => {
         if (global.connection && global.connection.state !== 'disconnected')
             return global.connection;
 
@@ -12,7 +10,5 @@ module.exports = () => {
         global.connection = connection;
 
         return connection
-    }
-
-    return db;
+    };
 }
