@@ -1,0 +1,25 @@
+roda o docker do mysql, porta 3306 do container para 3307 do pc
+docker run -p 3307:3306 --name mysqldb -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=keep --net keep-net mysql
+
+docker run -p 8081:3000 --name keepapi8081 -e MYSQL_HOST=mysql1 -e MYSQL_PORT=3306 --net keep-net node/keepapi
+
+docker cp ./schema.sql 7088ca550eee33635639369222cbfcae3bf7434bbb976522af250176ea9b686f:/
+docker exec 7088ca550eee33635639369222cbfcae3bf7434bbb976522af250176ea9b686f /bin/sh -c 'mysql -u root -ppassword root </schema.sql'
+
+
+docker run -d --net=mysql-cluster --name=management1 --ip=192.168.0.2 mysql/mysql-cluster-keep ndb_mgmd
+
+docker run -d --net=mysql-cluster --name=ndb1 --ip=192.168.0.3 mysql-docker/mysql-cluster ndbd
+docker run -d --net=mysql-cluster --name=ndb2 --ip=192.168.0.4 mysql-docker/mysql-cluster ndbd
+
+docker run -d --net=mysql-cluster --name=mysql2 --ip=192.168.0.9 -e MYSQL_RANDOM_ROOT_PASSWORD=true mysql-docker/mysql-cluster mysqld 
+docker run -d --net=mysql-cluster --name=mysql1 --ip=192.168.0.10 -e MYSQL_RANDOM_ROOT_PASSWORD=true mysql-docker/mysql-cluster mysqld
+
+
++ docker logs mysql1 2>&1 | grep PASSWORD
+[Entrypoint] GENERATED ROOT PASSWORD: 7/Hc5aiLo.udQ62;=+u*:5eDIZne477/
+
++ docker logs mysql2 2>&1 | grep PASSWORD
+[Entrypoint] GENERATED ROOT PASSWORD: F:176b6;y4fyd/,4J^QqPef=p?Zw2:m1  
+
+

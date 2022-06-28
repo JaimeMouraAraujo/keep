@@ -12,7 +12,6 @@ module.exports = app => {
         const conn = await connect();
         const row = await conn.query('SELECT * FROM nota WHERE id = ?;', [id]);
 
-        console.log(row[0]);
         return row[0][0] || {};
     };
 
@@ -36,7 +35,6 @@ module.exports = app => {
 
         const conn = await connect();
         const sql = 'UPDATE nota SET ' + updateString.slice(0, -2) + ' WHERE id = ?;';
-        console.log(sql);
         const result = await conn.query(sql, values);
         return result[0];
     };

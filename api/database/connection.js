@@ -5,7 +5,10 @@ module.exports = () => {
         if (global.connection && global.connection.state !== 'disconnected')
             return global.connection;
 
-        const connection = await mysql.createConnection("mysql://root:1234@localhost:3306/keep");
+        const connectionURL = "mysql://root:root@" + process.env.MYSQL_HOST + ":" + process.env.MYSQL_PORT + "/keep";
+
+        console.log("MYSQL URL: " + connectionURL);
+        const connection = await mysql.createConnection(connectionURL);
         console.log("Conectou no MySQL!");
         global.connection = connection;
 

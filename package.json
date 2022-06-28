@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build-dev": "npm install --save-dev",
+    "build": "npm install",
     "start": "nodemon server",
+    "start-docker": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
